@@ -15,7 +15,7 @@ COPY --from=build /app/package-lock.json ./package-lock.json
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/src/backend ./src/backend
 COPY --from=build /app/resources ./resources
-COPY --from=build /app/dist ./dist
+COPY --from=build /app/public ./public
 
 EXPOSE 3001
 CMD ["npm", "start"]

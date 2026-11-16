@@ -1,15 +1,5 @@
 import { useState } from 'react';
-
-async function postJson(path, body) {
-  const response = await fetch(path, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(body)
-  });
-  const result = await response.json();
-  if (!response.ok) throw new Error(result.error || 'The request failed.');
-  return result;
-}
+import { postJson } from './api.js';
 
 function SettingsPage() {
   const [jira, setJira] = useState({ baseUrl: '', email: '', token: '' });

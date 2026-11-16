@@ -2,7 +2,7 @@
 .env.*
 !.env.example
 node_modules
-dist
+public
 .git
 .gitignore
 npm-debug.log*

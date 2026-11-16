@@ -69,7 +69,21 @@ docker run --rm -p 3001:3001 --env-file ..\..\.env jira-test-plan
 
 For cloud deployment, publish this image to the provider's container registry, select it as the service image, and add the five Jira/Groq variables in the provider's server-side environment configuration. The container builds the frontend, then starts the production Express server. Cloud hosts that accept a Node process can also run `npm ci --include=dev`, `npm run build`, and `npm start`; ensure the build stage installs the frontend build dependencies.
 
-This deployment is provider-neutral for services that run a Docker container or a persistent Node.js process. Platforms limited to provider-specific serverless functions require an adapter for that platform's function lifecycle.
+The Docker/Node deployment remains provider-neutral for services that run a container or persistent Node.js process. The Vercel Express entry point is included for this serverless platform; other function-only platforms may require their own adapter.
+
+## Deploy to Vercel
+
+Vite builds static frontend files into `public/`, and Vercel serves them as static assets. Function entry points under `api/` route the health check, generation, and settings requests to the shared Express app. The Vercel configuration includes the copied template in each function bundle and allows up to 90 seconds for generation.
+
+1. In Vercel, set the project **Root Directory** to `Test_Planner_Agent/Implementation`.
+2. Add `JIRA_BASE_URL`, `JIRA_EMAIL`, `JIRA_TOKEN`, `GROQ_API_KEY`, and `GROQ_MODEL` under the project's server-side environment variables. Select the needed deployment environments; never add secrets to `VITE_*` variables.
+3. Deploy from this app directory with the Vercel CLI:
+
+   ```powershell
+   vercel --prod
+   ```
+
+The first request may take longer while the serverless function starts. Check `/api/health` on the deployed domain to verify that API routing reaches Express. Do not rely on the Vite development proxy in production.
 
 ## Use
 
@@ -82,6 +96,7 @@ This deployment is provider-neutral for services that run a Docker container or 
 
 - `npm test` runs backend HTTP tests with mocked Jira and Groq dependencies; these are not live service checks.
 - `npm run build` verifies the frontend production build.
+- Vercel deployment requires a linked, authenticated project and the configured server-side environment variables.
 - Live Jira/Groq integration requires valid credentials and a `GROQ_MODEL`; live integrations were not exercised by the mock tests.
 - AI output can vary despite a zero temperature. Review source traceability and completeness; the app rejects output that omits or reorders template headings.
 - Custom acceptance-criteria/requirements fields are included only when Jira exposes matching field names. Rich-text descriptions are normalized; details absent from the source are marked insufficient.

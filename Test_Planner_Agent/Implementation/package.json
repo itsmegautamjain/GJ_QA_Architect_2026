@@ -11,7 +11,7 @@
     "server": "node src/backend/server.js",
     "start": "node src/backend/server.js",
     "build": "vite build",
-    "test": "node --test"
+    "test": "node --test src/backend/app.test.js src/backend/integrations.test.js src/frontend/api.test.js"
   },
   "dependencies": {
     "dotenv": "^16.4.7",

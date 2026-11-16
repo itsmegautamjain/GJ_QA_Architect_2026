@@ -23,7 +23,7 @@ if (!Number.isInteger(port) || port < 1 || port > 65535) {
 }
 
 const app = createApp({ config, template });
-const frontendDirectory = path.join(appRoot, 'dist');
+const frontendDirectory = path.join(appRoot, 'public');
 const frontendIndex = path.join(frontendDirectory, 'index.html');
 
 if (existsSync(frontendIndex)) {

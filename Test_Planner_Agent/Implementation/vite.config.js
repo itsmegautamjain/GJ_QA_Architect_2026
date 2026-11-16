@@ -3,6 +3,11 @@ import react from '@vitejs/plugin-react';
 
 export default defineConfig({
   plugins: [react()],
+  publicDir: false,
+  build: {
+    outDir: 'public',
+    emptyOutDir: true
+  },
   server: {
     proxy: {
       '/api': process.env.BACKEND_URL || 'http://127.0.0.1:3001'
