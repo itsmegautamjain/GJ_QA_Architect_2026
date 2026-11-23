@@ -1,6 +1,6 @@
 import { test as setup, expect } from '@playwright/test';
 
-const authFile = 'playwright/.auth/user.json';
+const authFile = 'playwright/.auth/LeafTapUser.json';
 
 setup('Authenticate Leaftap application', async ({ page }) => {
     await page.goto('https://leaftaps.com');

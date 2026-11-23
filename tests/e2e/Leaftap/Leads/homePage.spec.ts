@@ -12,7 +12,7 @@ test.describe('Leaftap Home Page Test Suite - Leads context', async () => {
     //     await expect(page.getByRole('link', { name: 'My Home' })).toBeVisible();
     // });
 
-    test.use({ storageState: 'playwright/.auth/user.json' });
+    test.use({ storageState: 'playwright/.auth/LeafTapUser.json' });
 
     test.beforeEach('Login to Leaftap application', async ({ page }) => {
         await page.goto('https://leaftaps.com/opentaps');
